@@ -1,6 +1,11 @@
-FROM openjdk:8
-WORKDIR /app
-run mkdir -p src/main/webapp/resources target
-COPY src/main/webapp/* /app/src/main/webapp/
-COPY target/frontend-1.0-RELEASE.jar /app/target/frontend.jar
-CMD java -Dapi.host.baseurl=${BACKEND} -jar target/frontend.jar
+FROM tomcat
+
+MAINTAINER Mruthunjaya
+
+RUN apt-get update && apt-get -y upgrade
+
+WORKDIR /usr/local/tomcat/webapps
+COPY target/*.jar /usr/local/tomcat/webapps
+
+EXPOSE 8080
+
